@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Truth Today — Journalism of Record Since 1892</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --primary: #001e40;
+    --primary-mid: #003366;
+    --primary-light: #1f477b;
+    --accent-gold: #745b16;
+    --accent-gold-light: #e4c374;
+    --accent-red: #460003;
+    --surface: #fcf9f8;
+    --surface-low: #f6f3f2;
+    --surface-mid: #f0eded;
+    --surface-high: #eae7e7;
+    --surface-highest: #e5e2e1;
+    --outline: #737780;
+    --outline-light: #c3c6d1;
+    --on-surface: #1c1b1b;
+    --on-surface-variant: #43474f;
+    --on-primary: #ffffff;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Merriweather', Georgia, serif;
+    --font-ui: 'Work Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--surface);
+    color: var(--on-surface);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--surface); }
+  ::-webkit-scrollbar-thumb { background: var(--outline-light); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--outline); }
+
+  /* ── UTILITY ── */
+  .label-caps {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .rule { display: flex; align-items: center; gap: 1rem; }
+  .rule::after { content: ''; flex: 1; height: 1px; background: var(--outline-light); }
+
+  /* ── READING PROGRESS BAR ── */
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    background: var(--accent-gold);
+    z-index: 1000;
+    transition: width 0.1s linear;
+  }
+
+  /* ── TOP UTILITY BAR ── */
+  .utility-bar {
+    background: var(--primary);
+    color: var(--on-primary);
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    padding: 6px 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .utility-bar a { color: var(--accent-gold-light); text-decoration: none; }
+  .utility-bar a:hover { text-decoration: underline; }
+  .utility-links { display: flex; gap: 1.5rem; }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--outline-light);
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    transition: box-shadow 0.2s;
+  }
+  header.scrolled { box-shadow: 0 2px 16px rgba(0,30,64,0.08); }
+
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0 0.75rem;
+    border-bottom: 1px solid var(--outline-light);
+  }
+
+  .header-left, .header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+  }
+  .header-right { justify-content: flex-end; }
+
+  .masthead {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: -0.02em;
+    text-align: center;
+    flex: 2;
+    line-height: 1;
+    text-decoration: none;
+    display: block;
+  }
+  .masthead span { display: block; font-size: 0.35em; font-family: var(--font-ui); font-weight: 400; letter-spacing: 0.2em; color: var(--outline); margin-bottom: 4px; }
+
+  .icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background 0.15s;
+    font-size: 22px;
+  }
+  .icon-btn:hover { background: var(--surface-high); }
+  .icon-btn .material-symbols-outlined { font-size: 22px; font-variation-settings: 'FILL' 0, 'wght' 300; }
+
+  .subscribe-btn {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .subscribe-btn:hover { background: var(--primary-mid); }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  nav a {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-surface-variant);
+    text-decoration: none;
+    padding: 10px 14px;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  nav a:hover { color: var(--primary); }
+  nav a.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; }
+
+  /* ── BREAKING TICKER ── */
+  .breaking-bar {
+    background: var(--accent-red);
+    color: white;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    height: 34px;
+  }
+  .breaking-label {
+    background: #ff1a1a;
+    padding: 0 14px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .ticker-track {
+    display: flex;
+    animation: ticker 40s linear infinite;
+    white-space: nowrap;
+  }
+  .ticker-track:hover { animation-play-state: paused; }
+  .ticker-item { padding: 0 2.5rem; }
+  .ticker-item::before { content: '◆'; margin-right: 1rem; opacity: 0.5; font-size: 8px; }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── MAIN LAYOUT ── */
+  main { max-width: 1400px; margin: 0 auto; padding: 0 2rem 4rem; }
+
+  /* ── HERO SECTION ── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    grid-template-rows: auto auto;
+    gap: 0;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 2rem;
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .hero-main {
+    grid-row: 1 / 3;
+    padding-right: 2rem;
+    border-right: 1px solid var(--outline-light);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .hero-image-wrap {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+  }
+  .hero-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+  }
+  .hero-image-wrap:hover img { transform: scale(1.03); }
+  .hero-image-caption {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    color: var(--outline);
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  .hero-tag {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+  .tag-badge {
+    background: var(--primary);
+    color: white;
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 3px 8px;
+    text-transform: uppercase;
+  }
+  .tag-read-time {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    color: var(--outline);
+    letter-spacing: 0.06em;
+  }
+
+  .hero-headline {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--primary);
+    text-decoration: none;
+    display: block;
+    transition: opacity 0.2s;
+  }
+  .hero-headline:hover { opacity: 0.8; }
+
+  .hero-deck {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--on-surface-variant);
+    max-width: 65ch;
+  }
+
+  .hero-byline {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-top: 1px solid var(--outline-light);
+    padding-top: 0.75rem;
+  }
+  .byline-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--surface-high);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary);
+    border: 1px solid var(--outline-light);
+    flex-shrink: 0;
+  }
+  .byline-info { flex: 1; }
+  .byline-name {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--on-surface);
+  }
+  .byline-title {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--outline);
+    margin-top: 1px;
+  }
+  .byline-date {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--outline);
+  }
+
+  /* ── HERO SIDEBAR ── */
+  .hero-sidebar {
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    grid-row: 1 / 3;
+    align-self: start;
+  }
+
+  .sidebar-heading {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--primary);
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary);
+    margin-bottom: 1.25rem;
+  }
+
+  .sidebar-story {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--outline-light);
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s;
+  }
+  .sidebar-story:hover { opacity: 0.75; }
+  .sidebar-story-num {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--outline-light);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 28px;
+  }
+  .sidebar-story-content {}
+  .sidebar-story-label {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 3px;
+  }
+  .sidebar-story-title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--on-surface);
+  }
+
+  /* ── SECTION DIVIDER ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .section-header h2 {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--primary);
+    white-space: nowrap;
+  }
+  .section-header::after { content: ''; flex: 1; height: 1px; background: var(--outline-light); }
+
+  /* ── STORY GRID ── */
+  .story-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem 1.75rem;
+  }
+
+  .story-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: inherit;
+  }
+  .story-card-img {
+    overflow: hidden;
+    aspect-ratio: 3/2;
+  }
+  .story-card-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .story-card:hover .story-card-img img { transform: scale(1.05); }
+  .story-card-label {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+  }
+  .story-card-title {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--on-surface);
+    transition: color 0.2s;
+  }
+  .story-card:hover .story-card-title { color: var(--primary); }
+  .story-card-excerpt {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--on-surface-variant);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+  .story-card-meta {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    color: var(--outline);
+    margin-top: auto;
+  }
+
+  /* ── FEATURED ROW (wide card + list) ── */
+  .featured-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .featured-card {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .featured-card-img {
+    overflow: hidden;
+    aspect-ratio: 16/10;
+  }
+  .featured-card-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .featured-card:hover .featured-card-img img { transform: scale(1.04); }
+  .featured-card-label {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+  }
+  .featured-card-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--primary);
+  }
+  .featured-card-excerpt {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--on-surface-variant);
+  }
+
+  /* ── LIST STORIES ── */
+  .list-stories { display: flex; flex-direction: column; gap: 0; }
+  .list-story {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--outline-light);
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s;
+  }
+  .list-story:first-child { border-top: 1px solid var(--outline-light); }
+  .list-story:hover { opacity: 0.75; }
+  .list-story-img {
+    width: 90px;
+    height: 68px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .list-story-img img { width: 100%; height: 100%; object-fit: cover; }
+  .list-story-label {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 3px;
+  }
+  .list-story-title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--on-surface);
+  }
+  .list-story-meta {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    color: var(--outline);
+    margin-top: 4px;
+  }
+
+  /* ── FULL-WIDTH SPLIT LAYOUT ── */
+  .content-with-sidebar {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3rem;
+    margin-top: 2.5rem;
+  }
+
+  /* ── OPINION RAIL ── */
+  .opinion-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+    border-top: 2px solid var(--primary);
+    border-bottom: 1px solid var(--outline-light);
+  }
+  .opinion-card { display: flex; flex-direction: column; gap: 0.75rem; }
+  .opinion-avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--surface-high);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+    border: 2px solid var(--outline-light);
+  }
+  .opinion-author {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--on-surface);
+  }
+  .opinion-role {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--outline);
+  }
+  .opinion-title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.35;
+    color: var(--on-surface);
+  }
+
+  /* ── DATA CALLOUT ── */
+  .data-bar {
+    background: var(--primary);
+    color: white;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    margin: 3rem 0;
+  }
+  .data-item {
+    padding: 2rem 1.5rem;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .data-item:last-child { border-right: none; }
+  .data-num {
+    font-family: var(--font-display);
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--accent-gold-light);
+  }
+  .data-label {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    margin-top: 6px;
+  }
+  .data-desc {
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.8);
+    margin-top: 8px;
+  }
+
+  /* ── SIDEBAR WIDGETS ── */
+  .sidebar-widget { margin-bottom: 2.5rem; }
+  .sidebar-widget-title {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--primary);
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--primary);
+    margin-bottom: 1rem;
+  }
+
+  .trending-item {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--outline-light);
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s;
+  }
+  .trending-item:hover { opacity: 0.7; }
+  .trending-num {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--outline-light);
+    line-height: 1.2;
+    flex-shrink: 0;
+    width: 24px;
+  }
+  .trending-title {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--on-surface);
+  }
+  .trending-label {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 2px;
+  }
+
+  /* ── NEWSLETTER WIDGET ── */
+  .newsletter-widget {
+    background: var(--primary);
+    color: white;
+    padding: 1.5rem;
+  }
+  .newsletter-widget h3 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .newsletter-widget p {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .newsletter-input {
+    width: 100%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    font-family: var(--font-ui);
+    font-size: 13px;
+    padding: 9px 12px;
+    margin-bottom: 0.5rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .newsletter-input::placeholder { color: rgba(255,255,255,0.4); }
+  .newsletter-input:focus { border-color: var(--accent-gold-light); }
+  .newsletter-submit {
+    width: 100%;
+    background: var(--accent-gold-light);
+    color: var(--primary);
+    border: none;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .newsletter-submit:hover { background: #f0d080; }
+
+  /* ── PULLQUOTE ── */
+  .pullquote {
+    border-left: 3px solid var(--primary);
+    padding: 1rem 1.5rem;
+    margin: 2rem 0;
+    background: var(--surface-low);
+  }
+  .pullquote p {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-style: italic;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--primary);
+  }
+  .pullquote cite {
+    display: block;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--outline);
+    margin-top: 8px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--surface-low);
+    border-top: 2px solid var(--primary);
+    margin-top: 4rem;
+    padding: 3rem 2rem 1.5rem;
+  }
+  .footer-inner { max-width: 1400px; margin: 0 auto; }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--outline-light);
+    margin-bottom: 1.5rem;
+  }
+  .footer-brand {}
+  .footer-brand-name {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+  }
+  .footer-brand-tagline {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--on-surface-variant);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  .footer-col-title {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+  }
+  .footer-col a {
+    display: block;
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--on-surface-variant);
+    text-decoration: none;
+    margin-bottom: 6px;
+    transition: color 0.15s;
+  }
+  .footer-col a:hover { color: var(--primary); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-copyright {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--outline);
+  }
+  .footer-icons { display: flex; gap: 0.75rem; }
+  .footer-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--outline);
+    transition: color 0.15s;
+    padding: 4px;
+    display: flex;
+  }
+  .footer-icon:hover { color: var(--primary); }
+  .footer-icon .material-symbols-outlined { font-size: 20px; font-variation-settings: 'FILL' 0, 'wght' 300; }
+
+  /* ── LOAD MORE ── */
+  .load-more-btn {
+    display: block;
+    margin: 2rem auto 0;
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 12px 2.5rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .load-more-btn:hover { background: var(--primary); color: white; }
+
+  /* ── MOBILE NAV OVERLAY ── */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--primary);
+    z-index: 500;
+    padding: 2rem;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu-close {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 28px;
+    line-height: 1;
+  }
+  .mobile-nav-link {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 1rem;
+    transition: color 0.2s;
+  }
+  .mobile-nav-link:hover { color: var(--accent-gold-light); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-up {
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards;
+  }
+  .animate-up:nth-child(1) { animation-delay: 0.05s; }
+  .animate-up:nth-child(2) { animation-delay: 0.15s; }
+  .animate-up:nth-child(3) { animation-delay: 0.25s; }
+  .animate-up:nth-child(4) { animation-delay: 0.35s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-main { border-right: none; padding-right: 0; border-bottom: 1px solid var(--outline-light); padding-bottom: 1.5rem; }
+    .hero-sidebar { padding-left: 0; padding-top: 1.5rem; grid-row: auto; }
+    .story-grid { grid-template-columns: repeat(2, 1fr); }
+    .opinion-grid { grid-template-columns: repeat(2, 1fr); }
+    .data-bar { grid-template-columns: repeat(2, 1fr); }
+    .content-with-sidebar { grid-template-columns: 1fr; }
+    .featured-row { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 700px) {
+    .utility-bar { display: none; }
+    .story-grid { grid-template-columns: 1fr; }
+    .opinion-grid { grid-template-columns: 1fr; }
+    .data-bar { grid-template-columns: 1fr 1fr; }
+    .header-top { padding: 0.75rem 0; }
+    main { padding: 0 1rem 3rem; }
+    footer { padding: 2rem 1rem 1rem; }
+    .footer-top { grid-template-columns: 1fr; }
+    .subscribe-btn { display: none; }
+    .utility-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" onclick="toggleMenu()">✕</button>
+  <a class="mobile-nav-link" href="#">World</a>
+  <a class="mobile-nav-link" href="#">National</a>
+  <a class="mobile-nav-link" href="#">Business</a>
+  <a class="mobile-nav-link" href="#">Opinion</a>
+  <a class="mobile-nav-link" href="#">Sports</a>
+  <a class="mobile-nav-link" href="#">Science</a>
+  <a class="mobile-nav-link" href="#">Health</a>
+  <a class="mobile-nav-link" href="#">Politics</a>
+</div>
+
+<!-- UTILITY BAR -->
+<div class="utility-bar">
+  <div>Tuesday, May 26, 2026 &nbsp;|&nbsp; <a href="#">Subscribe for full access</a></div>
+  <div class="utility-links">
+    <a href="#">E-Paper</a>
+    <a href="#">Newsletters</a>
+    <a href="#">Podcasts</a>
+    <a href="#">Archive</a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header id="mainHeader">
+  <div class="header-inner">
+    <div class="header-top">
+      <div class="header-left">
+        <button class="icon-btn" onclick="toggleMenu()" aria-label="Open menu">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+        <button class="icon-btn" aria-label="Search">
+          <span class="material-symbols-outlined">search</span>
+        </button>
+      </div>
+      <a href="#" class="masthead">
+        <span>Established 1892</span>
+        The Truth Today
+      </a>
+      <div class="header-right">
+        <button class="icon-btn" aria-label="Notifications">
+          <span class="material-symbols-outlined">notifications</span>
+        </button>
+        <button class="icon-btn" aria-label="Account">
+          <span class="material-symbols-outlined">account_circle</span>
+        </button>
+        <button class="subscribe-btn">Subscribe</button>
+      </div>
+    </div>
+    <nav role="navigation" aria-label="Primary navigation">
+      <a href="#" class="active">National</a>
+      <a href="#">World</a>
+      <a href="#">Politics</a>
+      <a href="#">Business</a>
+      <a href="#">Technology</a>
+      <a href="#">Science</a>
+      <a href="#">Health</a>
+      <a href="#">Opinion</a>
+      <a href="#">Culture</a>
+      <a href="#">Sports</a>
+      <a href="#">Economy</a>
+    </nav>
+  </div>
+</header>
+
+<!-- BREAKING NEWS TICKER -->
+<div class="breaking-bar">
+  <div class="breaking-label">Breaking</div>
+  <div style="overflow:hidden;flex:1;">
+    <div class="ticker-track" id="ticker">
+      <span class="ticker-item">Senate votes on infrastructure package as debate enters fifth day</span>
+      <span class="ticker-item">Federal Reserve signals potential rate adjustment amid inflation data</span>
+      <span class="ticker-item">Midwest flooding prompts emergency declaration in three states</span>
+      <span class="ticker-item">Cyber Command issues new warning over power grid vulnerabilities</span>
+      <span class="ticker-item">Supreme Court to hear landmark tech liability case next month</span>
+      <span class="ticker-item">Education Secretary proposes sweeping overhaul of vocational grant programs</span>
+      <!-- duplicate for seamless loop -->
+      <span class="ticker-item">Senate votes on infrastructure package as debate enters fifth day</span>
+      <span class="ticker-item">Federal Reserve signals potential rate adjustment amid inflation data</span>
+      <span class="ticker-item">Midwest flooding prompts emergency declaration in three states</span>
+      <span class="ticker-item">Cyber Command issues new warning over power grid vulnerabilities</span>
+      <span class="ticker-item">Supreme Court to hear landmark tech liability case next month</span>
+      <span class="ticker-item">Education Secretary proposes sweeping overhaul of vocational grant programs</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- HERO -->
+  <section class="hero animate-up">
+    <!-- LEAD STORY -->
+    <div class="hero-main">
+      <div class="hero-image-wrap">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdm8yqk1YdVl5lrPLOYy9yq_R2yijMxlHcMi4xN0eA3QH6KGQXwkbP1VJ8l7aHXwDtE9VW9e8fxiMRCIR0N4_CEXB7LNS26l_eJh3FtyOGYJ9gBh7VxbhZrFWKqMkSwrCzqbBWvWwq3pFBDrBf_g1xB85RChqh7kMZ1tVnZ9y8k-R3I7h4Y0bCiLxqYWGWU5Lr2_rVGJGKdEy5JjmFaSi3_bEMnrOT0Gy3QFxBFLAHDPv4HxMbRwIlw" alt="The Silent Rebirth of the American Rust Belt"/>
+        <p class="hero-image-caption">The transformation of a former steel district into a high-tech manufacturing hub. (Photo: Elena Rossi)</p>
+      </div>
+      <div class="hero-tag">
+        <span class="tag-badge">Deep Read</span>
+        <span class="tag-read-time">15 min read</span>
+      </div>
+      <a href="#" class="hero-headline">The Silent Rebirth of the American Rust Belt</a>
+      <p class="hero-deck">What was once termed the 'Rust Belt' is currently undergoing a silent, digital-driven metamorphosis that few outside the region have fully grasped. The rise of the "Clean Room" economy is rewriting the geography of American industry.</p>
+      <div class="hero-byline">
+        <div class="byline-avatar">JS</div>
+        <div class="byline-info">
+          <div class="byline-name">Julian V. Sterling</div>
+          <div class="byline-title">Senior Correspondent</div>
+        </div>
+        <div class="byline-date">Published November 14, 2024</div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR: Top Stories -->
+    <div class="hero-sidebar">
+      <div class="sidebar-heading">Top Stories</div>
+      <a href="#" class="sidebar-story">
+        <div class="sidebar-story-num">01</div>
+        <div class="sidebar-story-content">
+          <div class="sidebar-story-label">Politics</div>
+          <div class="sidebar-story-title">Senate Infrastructure Vote Enters Contentious Fifth Day of Debate</div>
+        </div>
+      </a>
+      <a href="#" class="sidebar-story">
+        <div class="sidebar-story-num">02</div>
+        <div class="sidebar-story-content">
+          <div class="sidebar-story-label">Economy</div>
+          <div class="sidebar-story-title">Housing Starts Reach Five-Year Peak Across the Southeast Region</div>
+        </div>
+      </a>
+      <a href="#" class="sidebar-story">
+        <div class="sidebar-story-num">03</div>
+        <div class="sidebar-story-content">
+          <div class="sidebar-story-label">Technology</div>
+          <div class="sidebar-story-title">Supreme Court Hears Oral Arguments on Tech Platform Liability</div>
+        </div>
+      </a>
+      <a href="#" class="sidebar-story">
+        <div class="sidebar-story-num">04</div>
+        <div class="sidebar-story-content">
+          <div class="sidebar-story-label">Environment</div>
+          <div class="sidebar-story-title">National Parks Report Record Attendance for the Summer Season</div>
+        </div>
+      </a>
+      <a href="#" class="sidebar-story">
+        <div class="sidebar-story-num">05</div>
+        <div class="sidebar-story-content">
+          <div class="sidebar-story-label">Security</div>
+          <div class="sidebar-story-title">Cyber Command Issues Warning Over Grid Infrastructure Threats</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- DATA BAR -->
+  <div class="data-bar animate-up">
+    <div class="data-item">
+      <div class="data-num">24%</div>
+      <div class="data-label">GDP Growth in Tech</div>
+      <div class="data-desc">Rust Belt states leading national averages in digital sector expansion</div>
+    </div>
+    <div class="data-item">
+      <div class="data-num">12k+</div>
+      <div class="data-label">New Tech Roles</div>
+      <div class="data-desc">Clean room and semiconductor jobs created in the Ohio Valley since 2022</div>
+    </div>
+    <div class="data-item">
+      <div class="data-num">$4.2B</div>
+      <div class="data-label">Federal Investment</div>
+      <div class="data-desc">Committed to infrastructure retrofitting for fiber optics and lithium storage</div>
+    </div>
+    <div class="data-item">
+      <div class="data-num">38</div>
+      <div class="data-label">States Affected</div>
+      <div class="data-desc">Monitoring digital transition programs in former industrial communities</div>
+    </div>
+  </div>
+
+  <!-- NATIONAL SECTION -->
+  <section class="content-with-sidebar">
+    <div>
+      <div class="section-header"><h2>National</h2></div>
+
+      <!-- FEATURED ROW -->
+      <div class="featured-row">
+        <a href="#" class="featured-card">
+          <div class="featured-card-img">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQPS8vw7YnpCWmeQdBAugw1jW2aSa4GNbOxLTpAffBilOTCCoDIwK3aYATA8kLpk0dIfYygXkj0nA4oOFhI7QmDeK6eptSDe47VcqR83L7smEKQ5UK3giyqx_2ffuz4I4-08XLSEb9Htb3Udv3eCLWdgp4bWfl2opQf68b5E0el41_Z7nGgNyszdS93gqzSqP-UUH5CVKyTtdPBCi8vjGmxa0wyLHUVca-OkNNT_daKOxdVHSMkzaXHBbw05vkvJzxHmRaJNUW4Gs" alt="Forgotten Towns"/>
+          </div>
+          <div class="featured-card-label">Economy</div>
+          <div class="featured-card-title">The Forgotten Towns of the Monongahela</div>
+          <div class="featured-card-excerpt">Exploring the communities that technology left behind during the great migration. As new capital flows into regional hubs, rural towns face an uncertain horizon.</div>
+        </a>
+        <div>
+          <div class="list-stories">
+            <a href="#" class="list-story">
+              <div class="list-story-img">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6lX0YDRk1K4hFnsBHg3CYkbw86jADOTQFwuCNTC4MbHQ6RcLQ15itegF8Ffy9d6O_gQZhm_Lotqn5Mig2IW9iv7OTIV7CnpNvqwdHqGbIWjahCQroCXxt3go3NURMi3FkpZ3O66jbN_XzyvVSWJrVd5ra-UnAs58n6xFy1kJ9zKTpS8oD5L8VK-4MMFf6U6g8552utCQyDlFHK5uNNFsFk2LKrRBcPjiyxTLTwrzHZZ-gzaQWdRBYvQEzRLjXsyZgmOGmO80WGeI" alt="Silicon Prairie"/>
+              </div>
+              <div>
+                <div class="list-story-label">Technology</div>
+                <div class="list-story-title">Can Silicon Prairie Overtake the Valley?</div>
+                <div class="list-story-meta">6 min read · Nov 12</div>
+              </div>
+            </a>
+            <a href="#" class="list-story">
+              <div class="list-story-img">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM7oPBvmQmwHsTGJLcD1QaTDxRv6NzrQ9dAqvhcrexmdi6xfCt77nB605l_vNFBaCzpS28ppW4OSY0K8uPBRHvNJ4pZL0yXpTKK4cO3nCVTacVFOP5oasmeCLIh3YkeHOImCbntCRi6ZFOgDW13aODd0iX3VIpohifJB3c_B-cNum1qxgrvvLAQaS77O5AEORMUF7eKFb9m_zEBAAR32qB8OiVeo_qQA3JkBnIGE_DKHYb4VYpK7I-7UZI9cbAtWKgs50XO3-ttqM" alt="Retraining"/>
+              </div>
+              <div>
+                <div class="list-story-label">Education</div>
+                <div class="list-story-title">Retraining the Heartland</div>
+                <div class="list-story-meta">9 min read · Nov 10</div>
+              </div>
+            </a>
+            <a href="#" class="list-story">
+              <div class="list-story-img">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMb1MWFzfAtQlcHMkdj8OJ4C0Hc8qRkJ9pcZVHa7NLrnselyD8CAsHEmzZ8jO7NRFCLVhCEv_u5uvYr6hZeDB5oeb3sGH53uldFGgfi9z1YCji6G9ibH_70o_tKS_m3oETGdCH1wcOB2_c2lg6JooQILj2d0j_fsQa5PilcLNipYSu0-HYhRjf5keDyotQxV40RSIOS-k8p43IFxWCramdm_zyDwQY8M98tZB9XqG8GrjjRR12OxDlj8g_72MaUHhYmKC9YKp8n9I" alt="Offshore Wind"/>
+              </div>
+              <div>
+                <div class="list-story-label">Environment</div>
+                <div class="list-story-title">Offshore Wind Projects Face New Regulatory Hurdles in Atlantic Basin</div>
+                <div class="list-story-meta">4 min read · Nov 11</div>
+              </div>
+            </a>
+            <a href="#" class="list-story">
+              <div class="list-story-img" style="background:var(--surface-high);display:flex;align-items:center;justify-content:center;">
+                <span class="material-symbols-outlined" style="color:var(--outline-light);font-size:28px;">article</span>
+              </div>
+              <div>
+                <div class="list-story-label">Economy</div>
+                <div class="list-story-title">Housing Starts Reach Five-Year Peak Across the Southeast</div>
+                <div class="list-story-meta">5 min read · Nov 9</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PULLQUOTE -->
+      <div class="pullquote">
+        <p>"The geography of labor hasn't changed, but the vocabulary has. We still make things here; we just make them with code and precision lasers now."</p>
+        <cite>— David Miller, Foundry CEO</cite>
+      </div>
+
+      <!-- 3-UP STORY GRID -->
+      <div class="section-header" style="margin-top:2.5rem;"><h2>More in National</h2></div>
+      <div class="story-grid">
+        <a href="#" class="story-card animate-up">
+          <div class="story-card-img">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdm8yqk1YdVl5lrPLOYy9yq_R2yijMxlHcMi4xN0eA3QH6KGQXwkbP1VJ8l7aHXwDtE9VW9e8fxiMRCIR0N4_CEXB7LNS26l_eJh3FtyOGYJ9gBh7VxbhZrFWKqMkSwrCzqbBWvWwq3pFBDrBf_g1xB85RChqh7kMZ1tVnZ9y8k-R3I7h4Y0bCiLxqYWGWU5Lr2_rVGJGKdEy5JjmFaSi3_bEMnrOT0Gy3QFxBFLAHDPv4HxMbRwIlw" alt=""/>
+          </div>
+          <div class="story-card-label">National</div>
+          <div class="story-card-title">Clean Room Economy Signals End of Rust Belt as America Knew It</div>
+          <div class="story-card-excerpt">Semiconductors and advanced medical devices are now fabricated in facilities that once forged steel. Infrastructure retrofitted for fiber optics and lithium-ion storage.</div>
+          <div class="story-card-meta">8 min read · Nov 14, 2024</div>
+        </a>
+        <a href="#" class="story-card animate-up">
+          <div class="story-card-img">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQPS8vw7YnpCWmeQdBAugw1jW2aSa4GNbOxLTpAffBilOTCCoDIwK3aYATA8kLpk0dIfYygXkj0nA4oOFhI7QmDeK6eptSDe47VcqR83L7smEKQ5UK3giyqx_2ffuz4I4-08XLSEb9Htb3Udv3eCLWdgp4bWfl2opQf68b5E0el41_Z7nGgNyszdS93gqzSqP-UUH5CVKyTtdPBCi8vjGmxa0wyLHUVca-OkNNT_daKOxdVHSMkzaXHBbw05vkvJzxHmRaJNUW4Gs" alt=""/>
+          </div>
+          <div class="story-card-label">Economy</div>
+          <div class="story-card-title">Talent Loop: How Universities Are Anchoring Graduates to the Midwest</div>
+          <div class="story-card-excerpt">Pittsburgh and Columbus are leveraging world-class research universities to keep graduates from migrating to the coasts, creating a homegrown ecosystem of tech startups.</div>
+          <div class="story-card-meta">6 min read · Nov 13, 2024</div>
+        </a>
+        <a href="#" class="story-card animate-up">
+          <div class="story-card-img">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM7oPBvmQmwHsTGJLcD1QaTDxRv6NzrQ9dAqvhcrexmdi6xfCt77nB605l_vNFBaCzpS28ppW4OSY0K8uPBRHvNJ4pZL0yXpTKK4cO3nCVTacVFOP5oasmeCLIh3YkeHOImCbntCRi6ZFOgDW13aODd0iX3VIpohifJB3c_B-cNum1qxgrvvLAQaS77O5AEORMUF7eKFb9m_zEBAAR32qB8OiVeo_qQA3JkBnIGE_DKHYb4VYpK7I-7UZI9cbAtWKgs50XO3-ttqM" alt=""/>
+          </div>
+          <div class="story-card-label">Education</div>
+          <div class="story-card-title">Retraining at Scale: Community Colleges Race to Bridge the Skills Gap</div>
+          <div class="story-card-excerpt">As high-tech jobs flood the region, wage disparities widen and retraining programs struggle to keep pace with the sheer velocity of the digital transition.</div>
+          <div class="story-card-meta">7 min read · Nov 11, 2024</div>
+        </a>
+      </div>
+
+      <button class="load-more-btn">Load More Articles</button>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside>
+      <!-- TRENDING -->
+      <div class="sidebar-widget">
+        <div class="sidebar-widget-title">Trending Now</div>
+        <a href="#" class="trending-item">
+          <div class="trending-num">01</div>
+          <div>
+            <div class="trending-label">Law</div>
+            <div class="trending-title">Supreme Court Hears Oral Arguments on Tech Liability</div>
+          </div>
+        </a>
+        <a href="#" class="trending-item">
+          <div class="trending-num">02</div>
+          <div>
+            <div class="trending-label">Economy</div>
+            <div class="trending-title">Housing Starts Reach Five-Year Peak in Southeast Region</div>
+          </div>
+        </a>
+        <a href="#" class="trending-item">
+          <div class="trending-num">03</div>
+          <div>
+            <div class="trending-label">Environment</div>
+            <div class="trending-title">National Parks Report Record Summer Attendance</div>
+          </div>
+        </a>
+        <a href="#" class="trending-item">
+          <div class="trending-num">04</div>
+          <div>
+            <div class="trending-label">Education</div>
+            <div class="trending-title">Education Secretary Proposes Overhaul of Vocational Grants</div>
+          </div>
+        </a>
+        <a href="#" class="trending-item">
+          <div class="trending-num">05</div>
+          <div>
+            <div class="trending-label">Security</div>
+            <div class="trending-title">Cyber Command Issues Warning Over Grid Infrastructure</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- NEWSLETTER -->
+      <div class="newsletter-widget sidebar-widget">
+        <h3>The Morning Dispatch</h3>
+        <p>The most important national stories delivered to your inbox every morning at 7:00 AM.</p>
+        <input class="newsletter-input" type="email" placeholder="Your email address"/>
+        <button class="newsletter-submit">Subscribe — It's Free</button>
+      </div>
+
+      <!-- EDITIONS -->
+      <div class="sidebar-widget">
+        <div class="sidebar-widget-title">Our Editions</div>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;">
+          <a href="#" style="font-family:var(--font-ui);font-size:13px;color:var(--on-surface-variant);text-decoration:none;padding:8px 0;border-bottom:1px solid var(--outline-light);display:flex;justify-content:space-between;align-items:center;">
+            The Morning Dispatch <span class="material-symbols-outlined" style="font-size:16px;color:var(--outline);">arrow_forward</span>
+          </a>
+          <a href="#" style="font-family:var(--font-ui);font-size:13px;color:var(--on-surface-variant);text-decoration:none;padding:8px 0;border-bottom:1px solid var(--outline-light);display:flex;justify-content:space-between;align-items:center;">
+            The Sunday Deep Read <span class="material-symbols-outlined" style="font-size:16px;color:var(--outline);">arrow_forward</span>
+          </a>
+          <a href="#" style="font-family:var(--font-ui);font-size:13px;color:var(--on-surface-variant);text-decoration:none;padding:8px 0;border-bottom:1px solid var(--outline-light);display:flex;justify-content:space-between;align-items:center;">
+            The Business Brief <span class="material-symbols-outlined" style="font-size:16px;color:var(--outline);">arrow_forward</span>
+          </a>
+          <a href="#" style="font-family:var(--font-ui);font-size:13px;color:var(--on-surface-variant);text-decoration:none;padding:8px 0;display:flex;justify-content:space-between;align-items:center;">
+            The Science Ledger <span class="material-symbols-outlined" style="font-size:16px;color:var(--outline);">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- OPINION RAIL -->
+  <section style="margin-top:3rem;">
+    <div class="section-header"><h2>Opinion</h2></div>
+    <div class="opinion-grid">
+      <div class="opinion-card">
+        <div class="opinion-avatar">MM</div>
+        <div>
+          <div class="opinion-author">Margaret M. Howell</div>
+          <div class="opinion-role">Contributing Editor</div>
+        </div>
+        <div class="opinion-title">The Digital Divide Is Not a Technology Problem — It's a Policy Failure</div>
+      </div>
+      <div class="opinion-card">
+        <div class="opinion-avatar">RK</div>
+        <div>
+          <div class="opinion-author">Robert K. Vance</div>
+          <div class="opinion-role">Senior Analyst</div>
+        </div>
+        <div class="opinion-title">Why Retraining Programs Keep Missing the Workers Who Need Them Most</div>
+      </div>
+      <div class="opinion-card">
+        <div class="opinion-avatar">SL</div>
+        <div>
+          <div class="opinion-author">Sandra L. Chen</div>
+          <div class="opinion-role">Economic Correspondent</div>
+        </div>
+        <div class="opinion-title">The Real Cost of America's Offshore Wind Regulatory Paralysis</div>
+      </div>
+      <div class="opinion-card">
+        <div class="opinion-avatar">JT</div>
+        <div>
+          <div class="opinion-author">James T. Rafferty</div>
+          <div class="opinion-role">Political Desk</div>
+        </div>
+        <div class="opinion-title">Infrastructure Without Vision: What Washington Keeps Getting Wrong</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-name">The Truth Today</div>
+        <p class="footer-brand-tagline">Upholding the standard of journalism since 1892. Dedicated to rigorous investigation and clarity in an age of noise.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Sections</div>
+        <a href="#">World</a>
+        <a href="#">National</a>
+        <a href="#">Politics</a>
+        <a href="#">Business</a>
+        <a href="#">Science</a>
+        <a href="#">Health</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Legal</div>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Archive</a>
+        <a href="#">Corrections</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Support</div>
+        <a href="#">Contact Us</a>
+        <a href="#">Help Center</a>
+        <a href="#">Sitemap</a>
+        <a href="#">Advertise</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Social</div>
+        <a href="#">Twitter / X</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Instagram</a>
+        <a href="#">Podcast</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copyright">© 2026 The Truth Today. Established 1892. All intellectual property rights reserved.</span>
+      <div class="footer-icons">
+        <button class="footer-icon" aria-label="RSS Feed"><span class="material-symbols-outlined">rss_feed</span></button>
+        <button class="footer-icon" aria-label="Newsletter"><span class="material-symbols-outlined">mail</span></button>
+        <button class="footer-icon" aria-label="Share"><span class="material-symbols-outlined">share</span></button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress-bar').style.width = (scrollTop / height * 100) + '%';
+
+    // Sticky header shadow
+    const header = document.getElementById('mainHeader');
+    header.classList.toggle('scrolled', scrollTop > 10);
+  });
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // Scroll-triggered animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        entry.target.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.story-card').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transitionDelay = (i * 0.1) + 's';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
